@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/api/plus_one/{i}', 'MyController@plusOne');
+Route::get('/api/hello', 'MyController@hello');
