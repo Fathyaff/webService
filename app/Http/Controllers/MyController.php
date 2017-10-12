@@ -31,7 +31,7 @@ class MyController extends Controller
         if($quorum >= 5){
             try{
                 $client = Client::where('id', $user_id)->first();
-                if($client->nama == null){
+                if($client == null){
                     //client belum terdaftar
                     $status_transfer = -1;
                 }else{
@@ -74,7 +74,7 @@ class MyController extends Controller
         if($quorum >= 5){
             try{
                 $client = Client::where('id', $user_id)->first();
-                if($client->nama == null){
+                if($client == null){
                     $nilai_saldo = -1;
                 }else{
                     $nilai_saldo = $client->saldo;
