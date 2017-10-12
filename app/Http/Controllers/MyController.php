@@ -3,164 +3,119 @@
 namespace App\Http\Controllers;
 use File;
 use Carbon;
-use App\Requests;
-use App\PlusOne;
-use GuzzleHttp\Client;
+use App\Client;
 use Illuminate\Http\Request;
 
 class MyController extends Controller
 {
-    public function plusOne(){
-        $lastCount = PlusOne::latest()->first();
-        if($lastCount != null){
-            $count = $lastCount->plusoneret;
-        }else{
-            $count = 1;
-        }
-
-        $path = public_path()."/apiversion.txt";
-        $version = File::get($path);
-        MyController::incrementPO($count);
-        return response()->json(array('apiversion'=>$version,'count'=>$count));
-
+    public function ping(){
+        $pong = 1;
+        return response()->json(array('pong'=>$pong));
     }
 
-    public static function greeting(){
-        $client = new Client();
-        $res = $client->request('GET', 'http://localhost:17088', [
-            'form_params' => [
+    public static function getQuorum(){
+        
+        $quorum = 8;
+        return $quorum;
+    }
+
+    public function transfer(Request $request){
+        $user_id = $request->user_id;
+        $nilai = $request->nilai;
+
+        if($nilai < 0 || $nilai >= 1000000000){
+            $status_transfer = -5;
+        }
+
+        $quorum = MyController::getQuorum();
+        if($quorum >= 5){
+            try{
+                $client = Client::where('id', $user_id)->first();
+                if($client->nama == null){
+                    //client belum terdaftar
+                    $status_transfer = -1;
+                }else{
+                    //check nilai transfer
+                    $saldo = $client->saldo;
+                    $newSaldo = $saldo + $nilai;
+                    $update = $client;
+                    $update->saldo = $newSaldo;
+                    $update->update();
+                    
+                    $status_transfer = 1;
+                }                
                 
-            ]
-        ]);
-        echo $res->getStatusCode();
-        // "200"
-        echo $res->getHeader('content-type');
-        // 'application/json; charset=utf8'
-        echo $res->getBody();
-        // {"type":"User"...'
-        return $res->getBody();
-    }
-
-    public function hello(Request $request){
-        $name = $request->request;
-        $greeting = MyController::greeting()->state;
-        
-        $lastRequest = Requests::where('name', $name)->first();
-        if($lastRequest != null){
-            $count = 1;
-            $message = $greeting.", ".$name;
-            MyController::updateVisit($name);
+                if(Client::where('id', $user_id)->first() != null){
+                    $status_transfer = 1;
+                }
+            }catch(\Illuminate\Database\QueryException $ex){
+                $status_transfer = -4;
+                dd($ex);
+            }
         }else{
-            $count = $lastRequest->count;
-            $message = $greeting.', '.$name;
-            MyController::incrementVisit($name);
+            //quorum tidak terpenuhi
+            $status_transfer = -2;
         }
-        $currentVisit = Carbon\Carbon::now()->toDateTimeString();
-        $version = File::get($path);
+
+        return response()->json(array('status_transfer'=>$status_transfer));
+    }
+
+    public function getTotalSaldo(Request $request){
+        $user_id = $request->user_id;
+        //check if the client is from here
+
+    }
+
+    public function getSaldo(Request $request){
+        $user_id = $request->user_id;
+
+        //pemrosessan quorum
+        $quorum = MyController::getQuorum();
+        if($quorum >= 5){
+            try{
+                $client = Client::where('id', $user_id)->first();
+                if($client->nama == null){
+                    $nilai_saldo = -1;
+                }else{
+                    $nilai_saldo = $client->saldo;
+                }
+            }catch(\Illuminate\Database\QueryException $ex){
+                $nilai_saldo = -4;
+            }
+        }else{
+            //quorum tidak terpenuhi
+            $nilai_saldo = -2;
+        }
+
+        return response()->json(array('nilai_saldo'=>$nilai_saldo));
         
-        return response()
-            ->json(array('apiversion'=>$version,'count'=>$count, 
-                'currentVisit'=>$currentVisit, 'response'=>$message));
-
     }
 
-    public static function incrementVisit($name){
-        $requests = Requests::where('name', $name)->first();
-        $incCount = $requests->count;
-        $requests->count = $incCount;
-        $requests->update();
-        return;
+    public function register(Request $request){
+        $user_id = $request->user_id;
+        $nama = $request->nama;
+
+        $quorum = MyController::getQuorum();
+        if($quorum >= 5){
+            try{
+                $new = new Client();
+                $new->id = $user_id;
+                $new->nama = $nama;
+                $new->saldo = 0;
+                $new->save();
+                
+                if(Client::where('id', $user_id)->first() != null){
+                    $status_register = 1;
+                }
+            }catch(\Illuminate\Database\QueryException $ex){
+                $status_register = -4;
+            }
+        }else{
+            //quorum tidak terpenuhi
+            $status_register = -2;
+        }
+
+        return response()->json(array('status_register'=>$status_register));
     }
 
-    public static function updateVisit($name){
-        $requests = new Requests();
-        $requests->name = $name;
-        $requests->count = 1;
-        $requests->save();
-        return;
-    }
-
-    public static function incrementPO($count){
-        $newCount = new PlusOne();
-        $newCount->plusoneret = $count + 1;
-        $newCount->save();
-        return;
-    }
-   
-   
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
