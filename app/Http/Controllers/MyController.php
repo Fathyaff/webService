@@ -97,7 +97,7 @@ class MyController extends Controller
 
         $quorum = MyController::getQuorum();
         if($quorum >= 5){
-            try{
+            //try{
                 $new = new Client();
                 $new->id = $user_id;
                 $new->nama = $nama;
@@ -107,9 +107,9 @@ class MyController extends Controller
                 if(Client::where('id', $user_id)->first() != null){
                     $status_register = 1;
                 }
-            }catch(\Illuminate\Database\QueryException $ex){
-                $status_register = -4;
-            }
+           // }catch(\Illuminate\Database\QueryException $ex){
+              //  $status_register = -4;
+            //}
         }else{
             //quorum tidak terpenuhi
             $status_register = -2;
