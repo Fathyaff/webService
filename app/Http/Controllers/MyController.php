@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use File;
 use Carbon;
 use App\Client;
+use Storage;
 use Illuminate\Http\Request;
 
 class MyController extends Controller
