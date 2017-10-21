@@ -93,8 +93,8 @@ class MyController extends Controller
     }
 
     public function register(Request $request){
-        $user_id = $request->user_id;
-        $nama = $request->nama;
+        $user_id = $request->input('user_id');
+        $nama = $request->input('nama');
 
         $quorum = MyController::getQuorum();
         if($quorum >= 5){
@@ -109,7 +109,8 @@ class MyController extends Controller
                     $status_register = 1;
                 }
            }catch(\Illuminate\Database\QueryException $ex){
-               $status_register = -4;
+                
+                $status_register = -4;
             }
         }else{
             //quorum tidak terpenuhi
