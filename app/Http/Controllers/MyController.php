@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use File;
 use Carbon;
 use App\Client;
+use Storage;
 use Illuminate\Http\Request;
 
 class MyController extends Controller
@@ -98,14 +99,24 @@ class MyController extends Controller
         $quorum = MyController::getQuorum();
         if($quorum >= 5){
             try{
-                $new = new Client();
-                $new->id = $user_id;
-                $new->nama = $nama;
-                $new->saldo = 0;
-                $new->save();
-                
-                if(Client::where('id', $user_id)->first() != null){
-                    $status_register = 1;
+                // $new = new Client();
+                // $new->id = $user_id;
+                // $new->nama = $nama;
+                // $new->saldo = 0;
+                // $new->save();
+
+                $path_and_name_file = public_path()."/" . $user_id . ".txt" ;
+                try{
+                    $file = File::get($path_and_name_file);
+                    $status_register = -99;
+                }catch (FileNotFoundException $e) {
+                    $saldo = 0;
+                    $contents = $nama . "\n" . $saldo;
+                    File::put($path_and_name_file , $contents);
+                    
+                    if(Storage::get($path_and_name_file) != null){
+                        $status_register = 1;
+                    }
                 }
             }catch(\Illuminate\Database\QueryException $ex){
                 $status_register = -4;
