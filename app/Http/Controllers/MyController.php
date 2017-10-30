@@ -17,15 +17,69 @@ class MyController extends Controller
 
     public static function getQuorum(){
         $totalQuorum = 0;
-        $client = new Client();
-        $res = $client->request('GET', 'http://152.118.31.2/list.php', [
-            'headers' => [
-                'Accept' => 'application/json',
-                'Content-type' => 'application/json'
-        ]]);
+        // $client = new Client();
+        // $res = $client->request('GET', 'http://152.118.31.2/list.php', [
+        //     'headers' => [
+        //         'Accept' => 'application/json',
+        //         'Content-type' => 'application/json'
+        // ]]);
         
-        $bodyResp = $res->getBody();
-        $array = json_decode($bodyResp, true);
+        // $bodyResp = $res->getBody();
+        //$array = json_decode($bodyResp, true);
+        $array = [
+            {
+                "ip": "172.17.0.19",
+                "npm": "1406577386"
+            },
+            {
+                "ip": "172.17.0.50",
+                "npm": "1406543712"
+            },
+            {
+                "ip": "172.17.0.17",
+                "npm": "1406579100"
+            },
+            {
+                "ip": "172.17.0.59",
+                "npm": "1406527532"
+            },
+            {
+                "ip": "172.17.0.54",
+                "npm": "1406543624"
+            },
+            {
+                "ip": "172.17.0.21",
+                "npm": "1406573923"
+            },
+            {
+                "ip": "172.17.0.32",
+                "npm": "1406564074"
+            },
+            {
+                "ip": "172.17.0.26",
+                "npm": "1406572025"
+            },
+            {
+                "ip": "172.17.0.46",
+                "npm": "1406543776"
+            },
+            {
+                "ip": "172.17.0.51",
+                "npm": "1406543694"
+            },
+            {
+                "ip": "172.17.0.39",
+                "npm": "1406543883"
+            },
+            {
+                "ip": "172.17.0.23",
+                "npm": "1406573601"
+            },
+            {
+                "ip": "172.17.0.28",
+                "npm": "1406569781"
+            }
+        ];
         for($i = 0; $i < 10 ; $i++){
             $activeIP = $array[$i]['ip'];
             $client2 = new Client();
@@ -34,6 +88,7 @@ class MyController extends Controller
                     'Accept' => 'application/json',
                     'Content-type' => 'application/json'
             ]]);
+            
             $quorumResponse = json_decode($resp->getBody(), true);
             $pong = $quorumResponse['pong'];
             if($pong == 1){
