@@ -25,7 +25,7 @@ class MyController extends Controller
         ]]);
         
         $bodyResp = $res->getBody();
-        $array = json_decode($bodyResp);
+        $array = json_decode($bodyResp, true);
         for($i = 0; $i < 10 ; $i++){
             $activeIP = $array[$i]['ip'];
             $client2 = new Client();
