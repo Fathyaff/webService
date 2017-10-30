@@ -27,7 +27,7 @@ class MyController extends Controller
         $bodyResp = $res->getBody();
         $array = json_decode($bodyResp);
         for($i = 0; $i < 10 ; $i++){
-            $activeIP = $array[$i].ip;
+            $activeIP = $array[$i]['ip'];
             $client2 = new Client();
             $resp = $client2->request('POST', $activeIP."/ewallet/ping", [
                 'headers' => [
