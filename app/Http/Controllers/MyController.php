@@ -34,7 +34,7 @@ class MyController extends Controller
                     'Accept' => 'application/json',
                     'Content-type' => 'application/json'
             ]]);
-            $quorumResponse = json_decode($resp->getBody());
+            $quorumResponse = json_decode($resp->getBody(), true);
             $pong = $quorumResponse['pong'];
             if($pong == 1){
                 $totalQuorum += 1;
