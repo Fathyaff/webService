@@ -54,10 +54,14 @@ class MyController extends Controller
             array(
                 "ip" => "172.17.0.32",
                 "npm" => "1406564074"
+            ),
+            array(
+                "ip" => "172.17.0.63",
+                "npm" => "1306398983"
             )
         );
 
-        for($i = 0; $i < 10 ; $i++){
+        for($i = 0; $i < 8 ; $i++){
             $activeIP = $array[$i]['ip'];
             $client2 = new Client();
             $resp = $client2->request('POST', $activeIP."/ewallet/ping", [
