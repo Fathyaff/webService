@@ -19,9 +19,9 @@ class MyController extends Controller
         $totalQuorum = 0;
         $client = new Client();
         $res = $client->request('GET', 'http://152.118.31.2/list.php', [
-            ‘headers’ => [
-                ‘Accept’ => ‘application/json’,
-                ‘Content-type’ => ‘application/json’
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-type' => 'application/json'
         ]]);
         
         $bodyResp = $res->getBody();
@@ -30,9 +30,9 @@ class MyController extends Controller
             $activeIP = $array[$i].ip;
             $client2 = new Client();
             $resp = $client2->request('POST', $activeIP."/ewallet/ping", [
-                ‘headers’ => [
-                    ‘Accept’ => ‘application/json’,
-                    ‘Content-type’ => ‘application/json’
+                'headers' => [
+                    'Accept' => 'application/json',
+                    'Content-type' => 'application/json'
             ]]);
             $quorumResponse = json_decode($resp->getBody());
             $pong = $quorumResponse['pong'];
