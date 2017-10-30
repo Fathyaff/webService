@@ -32,7 +32,7 @@ class MyController extends Controller
                 "npm" => "1406577386"
             ),
             array(
-                "ip" => "172.17.0.50",
+                "ip" => "172.17.0.40",
                 "npm" => "1406543712"
             ),
             array(
