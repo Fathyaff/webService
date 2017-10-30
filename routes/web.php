@@ -12,7 +12,9 @@
 */
 
 Route::post('/ewallet/ping', 'MyController@ping');
-Route::post('/ewallet/register', 'MyController@register');
-Route::post('/ewallet/getSaldo/', 'MyController@getSaldo');
-Route::post('/ewallet/getTotalSaldo', 'MyController@getTotalSaldo');
-Route::post('/ewallet/transfer', 'Myntroller@transfer');
+Route::group(['middleware' => 'web'], function () {
+    Route::post('/ewallet/register', 'MyController@register');
+    Route::post('/ewallet/getSaldo/', 'MyController@getSaldo');
+    Route::post('/ewallet/getTotalSaldo', 'MyController@getTotalSaldo');
+    Route::post('/ewallet/transfer', 'Myntroller@transfer');
+});
