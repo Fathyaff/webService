@@ -152,8 +152,8 @@ class MyController extends Controller
     }
 
     public function register(Request $request){
-        $user_id = $request->input('user_id');
-        $nama = $request->input('nama');
+        $user_id = $request->user_id;
+        $nama = $request->nama;
 
         $quorum = MyController::getQuorum();
         if($quorum >= 5){
