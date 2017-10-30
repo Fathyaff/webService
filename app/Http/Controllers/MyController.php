@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 use File;
 use Carbon;
-use App\Client;
+use App\Clients;
 use Storage;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class MyController extends Controller
@@ -15,9 +16,31 @@ class MyController extends Controller
     }
 
     public static function getQuorum(){
+        $totalQuorum = 0;
+        $client = new Client();
+        $res = $client->request('GET', 'http://152.118.31.2/list.php', [
+            ‘headers’ => [
+                ‘Accept’ => ‘application/json’,
+                ‘Content-type’ => ‘application/json’
+        ]]);
         
-        $quorum = 8;
-        return $quorum;
+        $bodyResp = $res->getBody();
+        $array = json_decode($bodyResp);
+        for($i = 0; $i < 10 ; $i++){
+            $activeIP = $array[$i].ip;
+            $client2 = new Client();
+            $resp = $client2->request('POST', $activeIP."/ewallet/ping", [
+                ‘headers’ => [
+                    ‘Accept’ => ‘application/json’,
+                    ‘Content-type’ => ‘application/json’
+            ]]);
+            $quorumResponse = json_decode($resp->getBody());
+            $pong = $quorumResponse['pong'];
+            if($pong == 1){
+                $totalQuorum += 1;
+            }
+        }
+        return $totalQuorum;
     }
 
     public function transfer(Request $request){
@@ -31,7 +54,7 @@ class MyController extends Controller
         $quorum = MyController::getQuorum();
         if($quorum >= 5){
             try{
-                $client = Client::where('id', $user_id)->first();
+                $client = Clients::where('id', $user_id)->first();
                 if($client == null){
                     //client belum terdaftar
                     $status_transfer = -1;
@@ -74,7 +97,7 @@ class MyController extends Controller
         $quorum = MyController::getQuorum();
         if($quorum >= 5){
             try{
-                $client = Client::where('id', $user_id)->first();
+                $client = Clients::where('id', $user_id)->first();
                 if($client == null){
                     $nilai_saldo = -1;
                 }else{
@@ -99,13 +122,13 @@ class MyController extends Controller
         $quorum = MyController::getQuorum();
         if($quorum >= 5){
             try{
-                $new = new Client();
+                $new = new Clients();
                 $new->id = $user_id;
                 $new->nama = $nama;
                 $new->saldo = 0;
                 $new->save();
                 
-                if(Client::where('id', $user_id)->first() != null){
+                if(Clients::where('id', $user_id)->first() != null){
                     $status_register = 1;
                 }
            }catch(\Illuminate\Database\QueryException $ex){
