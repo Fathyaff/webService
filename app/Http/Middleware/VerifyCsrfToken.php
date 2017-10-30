@@ -14,7 +14,6 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         //
         '/ewallet/ping',
-        '/ewallet/register',
         '/ewallet/getSaldo',
         '/ewallet/getTotalSaldo',
         '/ewallet/transfer'
