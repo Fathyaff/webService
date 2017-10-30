@@ -176,7 +176,7 @@ class MyController extends Controller
             $status_register = -2;
         }
 
-        return response()->json(array('status_register'=>$status_register));
+        return response()->json(array('status_register'=>$status_register, 'nama' => $nama, 'user_id'=>$user_id));
     }
 
 }
