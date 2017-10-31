@@ -105,7 +105,7 @@ class MyController extends Controller
                     $status_transfer = 1;
                 }                
                 
-                if(Client::where('id', $user_id)->first() != null){
+                if(Clients::where('id', $user_id)->first() != null){
                     $status_transfer = 1;
                 }
             }catch(\Illuminate\Database\QueryException $ex){
