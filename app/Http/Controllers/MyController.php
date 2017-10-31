@@ -170,11 +170,6 @@ class MyController extends Controller
                         $activeIP = $array[$i]['ip'];
                         $client2 = new Client();
                         $resp = $client2->request('POST', $activeIP."/ewallet/getSaldo", [
-                            'headers' => [
-                                'Accept' => 'application/json',
-                                'Content-type' => 'application/json'
-                        
-                            ], 
                             'form_params' => [
                                 'user_id' => $user_id,
                             ]
@@ -192,11 +187,6 @@ class MyController extends Controller
                     $ipHomebased = MyController::findDomisili($user_id);
                     $client3 = new Client();
                     $resp = $client3->request('POST', $ipHomebased."/ewallet/getTotalSaldo", [
-                        'headers' => [
-                            'Accept' => 'application/json',
-                            'Content-type' => 'application/json'
-                    
-                        ], 
                         'form_params' => [
                             'user_id' => $user_id,
                         ]
