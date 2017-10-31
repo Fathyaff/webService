@@ -170,7 +170,10 @@ class MyController extends Controller
                         $activeIP = $array[$i]['ip'];
                         $client2 = new Client();
                         $resp = $client2->request('POST', $activeIP."/ewallet/getSaldo", [
-                            'form_params' => [
+                            'headers' => [
+                                'Accept' => 'application/json',
+                                'Content-type' => 'application/json'
+                            ],'form_params' => [
                                 'user_id' => $user_id,
                             ]
                         
