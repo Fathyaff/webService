@@ -122,8 +122,122 @@ class MyController extends Controller
 
     public function getTotalSaldo(Request $request){
         $user_id = $request->user_id;
+        $nilai_saldo = 0;
         //check if the client is from here
+        //pemrosessan quorum
+        $quorum = MyController::getQuorum();
+        if($quorum >= 5){
+            try{
+                if($user_id == '1406543832'){
+                    $array = array(
+                        array(
+                            "ip" => "172.17.0.19",
+                            "npm" => "1406577386"
+                        ),
+                        array(
+                            "ip" => "172.17.0.40",
+                            "npm" => "1406543712"
+                        ),
+                        array(
+                            "ip" => "172.17.0.17",
+                            "npm" => "1406579100"
+                        ),
+                        array(
+                            "ip" => "172.17.0.59",
+                            "npm" => "1406527532"
+                        ),
+                        array(
+                            "ip" => "172.17.0.36",
+                            "npm" => "1406543624"
+                        ),
+                        array(
+                            "ip" => "172.17.0.21",
+                            "npm" => "1406573923"
+                        ),
+                        array(
+                            "ip" => "172.17.0.32",
+                            "npm" => "1406564074"
+                        ),
+                        array(
+                            "ip" => "172.17.0.66",
+                            "npm" => "1306398983"
+                        )
+                    );
 
+                    for($i = 0; $i < 8 ; $i++){
+                        $activeIP = $array[$i]['ip'];
+                        $client2 = new Client();
+                        $resp = $client2->request('POST', $activeIP."/ewallet/getSaldo", [
+                            'headers' => [
+                                'Accept' => 'application/json',
+                                'Content-type' => 'application/json'
+                        
+                            ], 
+                            'form_params' => [
+                                'user_id' => $user_id,
+                            ]
+                        
+                        ]);
+                        
+                        $saldoResponse = json_decode($resp->getBody(), true);
+                        $nilaiSaldo = $quorumResponse['nilai_saldo'];
+                        if($nilaiSaldo != -1 || $nilaiSaldo != -2 || $nilaiSaldo != -4 || $nilaiSaldo != -99){
+                            $nilai_saldo += $nilaiSaldo;
+                        }
+                    }
+
+                }else{
+                    $ipHomebased = MyController::findDomisili($user_id);
+                    $client3 = new Client();
+                    $resp = $client3->request('POST', $ipHomebased."/ewallet/getTotalSaldo", [
+                        'headers' => [
+                            'Accept' => 'application/json',
+                            'Content-type' => 'application/json'
+                    
+                        ], 
+                        'form_params' => [
+                            'user_id' => $user_id,
+                        ]
+                    
+                    ]);
+                    $totalSaldoResponse = json_decode($resp->getBody(), true);
+                    $nilai_saldo = $totalSaldoResponse['nilai_saldo'];
+                }
+                
+                
+            }catch(\Illuminate\Database\QueryException $ex){
+                $nilai_saldo = -4;
+            }
+        }else{
+            //quorum tidak terpenuhi
+            $nilai_saldo = -2;
+        }
+
+        return response()->json(array('nilai_saldo'=>$nilai_saldo));
+
+    }
+
+    private static function findDomisili($user_id){
+        $client = new Client();
+        $res = $client->request('GET', 'http://152.118.31.2/list.php', [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-type' => 'application/json'
+        ]]);
+        
+        $bodyResp = $res->getBody();
+        $array = json_decode($bodyResp, true);
+
+        for($i = 0; $i < 8 ; $i++){
+            $ip = $array[$i]['ip'];
+            $npm = $array[$i]['nama'];
+            if($npm == $user_id){
+                return $ip;
+            }else{
+                //if no ip correspondent with user_id
+                return 0;
+            }
+        }
     }
 
     public function getSaldo(Request $request){

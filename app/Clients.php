@@ -8,6 +8,6 @@ class Clients extends Model
 {
     protected $table = 'clients';
     protected $primaryKey = 'id';
-    protected $fillable = ['id','nama', 'saldo', 'domisili'];
+    protected $fillable = ['id','nama', 'saldo'];
     protected $timestamp = true;
 }

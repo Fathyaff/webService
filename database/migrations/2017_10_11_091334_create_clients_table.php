@@ -17,7 +17,6 @@ class CreateClientsTable extends Migration
             $table->string('id', 10)->unique();
             $table->string('nama');
             $table->integer('saldo');
-            $table->string('domisili');
             $table->timestamps();
         });
     }
