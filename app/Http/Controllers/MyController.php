@@ -97,7 +97,7 @@ class MyController extends Controller
                     
                     
                     $saldo = $client->saldo;
-                    $newSaldo = $saldo - $nilai;
+                    $newSaldo = $saldo + $nilai;
                     $update = $client;
                     $update->saldo = $newSaldo;
                     $update->update();
