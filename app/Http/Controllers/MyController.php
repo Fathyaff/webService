@@ -166,7 +166,7 @@ class MyController extends Controller
                         )
                     );
 
-                    for($i = 0; $i < 8 ; $i++){
+                    for($i = 0; $i < 3 ; $i++){
                         $activeIP = $array[$i]['ip'];
                         $client2 = new Client();
                         $resp = $client2->request('POST', $activeIP."/ewallet/getSaldo", [
@@ -174,7 +174,7 @@ class MyController extends Controller
                                 'Accept' => 'application/json',
                                 'Content-type' => 'application/x-www-form-urlencoded',
                             ],'form_params' => array(
-                                'user_id' => "1406543832",
+                                'user_id' => $user_id,
                             )
                         ]);
                         
@@ -193,7 +193,7 @@ class MyController extends Controller
                             'Accept' => 'application/json',
                             'Content-type' => 'application/x-www-form-urlencoded',
                         ],'form_params' => array(
-                            'user_id' => "1406543832",
+                            'user_id' => $user_id,
                         )
                     
                     ]);
@@ -227,7 +227,7 @@ class MyController extends Controller
 
         for($i = 0; $i < 8 ; $i++){
             $ip = $array[$i]['ip'];
-            $npm = $array[$i]['nama'];
+            $npm = $array[$i]['npm'];
             if($npm == $user_id){
                 return $ip;
             }else{
