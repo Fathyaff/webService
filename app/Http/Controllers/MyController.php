@@ -1,11 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use File;
-use Carbon;
 use App\Clients;
-use Storage;
-use DB;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
@@ -27,6 +23,7 @@ class MyController extends Controller
         
         // $bodyResp = $res->getBody();
         //$array = json_decode($bodyResp, true);
+        
         $array = array(
             array(
                 "ip" => "172.17.0.19",
@@ -91,26 +88,29 @@ class MyController extends Controller
         $quorum = MyController::getQuorum();
         if($quorum >= 5){
             try{
-                
-                    $client = Clients::where('id', $user_id)->first();
-                    if($client == null){
-                        //client belum terdaftar
-                        $status_transfer = -1;
-                    }else{
-                        //check nilai transfer
-                        $saldo = $client->saldo;
-                        $newSaldo = $saldo + $nilai;
-                        $update = $client;
-                        $update->saldo = $newSaldo;
-                        $update->update();
-                        
-                        $status_transfer = 1;
-                    }                
+                $client = Clients::where('id', $user_id)->first();
+                if($client == null){
+                    //client belum terdaftar
+                    $status_transfer = -1;
+                }else{
+                    //check nilai transfer
                     
-                    if(Clients::where('id', $user_id)->first() != null){
-                        $status_transfer = 1;
-                    }
-                       
+                    
+                    $saldo = $client->saldo;
+                    $newSaldo = $saldo - $nilai;
+                    $update = $client;
+                    $update->saldo = $newSaldo;
+                    $update->update();
+
+
+
+                        
+                    $status_transfer = 1;
+                }                
+                    
+                if(Clients::where('id', $user_id)->first() != null){
+                    $status_transfer = 1;
+                }                       
             }catch(\Illuminate\Database\QueryException $ex){
                 $status_transfer = -4;
             }
@@ -153,8 +153,8 @@ class MyController extends Controller
                             "npm" => "1406573923"
                         ),
                         array(
-                            "ip" => "172.17.0.37",
-                            "npm" => "1406559042"                    
+                            "ip" => "172.17.0.23",
+                            "npm" => "1406573601"             
                         ),
                         array(
                             "ip"=> "172.17.0.48",
