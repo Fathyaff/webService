@@ -5,6 +5,7 @@ use File;
 use Carbon;
 use App\Clients;
 use Storage;
+use DB;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
@@ -273,7 +274,7 @@ class MyController extends Controller
         $quorum = MyController::getQuorum();
         if($quorum >= 5){
             try{
-                DB::transactions(function(){
+                DB::transaction(function(){
                     $new = new Clients();
                     $new->id = $user_id;
                     $new->nama = $nama;
