@@ -166,7 +166,7 @@ class MyController extends Controller
                         )
                     );
 
-                    for($i = 0; $i < 3 ; $i++){
+                    for($i = 0; $i < 8 ; $i++){
                         $activeIP = $array[$i]['ip'];
                         $client2 = new Client();
                         $resp = $client2->request('POST', $activeIP."/ewallet/getSaldo", [
@@ -180,7 +180,7 @@ class MyController extends Controller
                         
                         $saldoResponse = json_decode($resp->getBody(), true);
                         $nilaiSaldo = $saldoResponse['nilai_saldo'];
-                        if($nilaiSaldo != -1 || $nilaiSaldo != -2 || $nilaiSaldo != -4 || $nilaiSaldo != -99){
+                        if($nilaiSaldo != -1 && $nilaiSaldo != -2 && $nilaiSaldo != -4 && $nilaiSaldo != -99){
                             $nilai_saldo += $nilaiSaldo;
                         }
                     }
