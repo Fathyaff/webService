@@ -12,9 +12,7 @@
 */
 
 Route::post('/ewallet/ping', 'MyController@ping');
-Route::group(['middleware' => 'csrf'], function () {
-    Route::post('/ewallet/register', 'MyController@register');
-    Route::post('/ewallet/getSaldo/', 'MyController@getSaldo');
-    Route::post('/ewallet/getTotalSaldo', 'MyController@getTotalSaldo');
-    Route::post('/ewallet/transfer', 'Myntroller@transfer');
-});
+Route::post('/ewallet/register', 'MyController@register');
+Route::post('/ewallet/getSaldo/', 'MyController@getSaldo');
+Route::post('/ewallet/getTotalSaldo', 'MyController@getTotalSaldo');
+Route::post('/ewallet/transfer', 'Myntroller@transfer');
