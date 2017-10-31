@@ -177,7 +177,7 @@ class MyController extends Controller
                         ]);
                         
                         $saldoResponse = json_decode($resp->getBody(), true);
-                        $nilaiSaldo = $quorumResponse['nilai_saldo'];
+                        $nilaiSaldo = $saldoResponse['nilai_saldo'];
                         if($nilaiSaldo != -1 || $nilaiSaldo != -2 || $nilaiSaldo != -4 || $nilaiSaldo != -99){
                             $nilai_saldo += $nilaiSaldo;
                         }
