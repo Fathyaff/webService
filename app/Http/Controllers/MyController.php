@@ -91,7 +91,7 @@ class MyController extends Controller
         $quorum = MyController::getQuorum();
         if($quorum >= 5){
             try{
-                DB::transaction(function(){
+                DB::transaction(function() use($user_id, $nilai ){
                     $client = Clients::where('id', $user_id)->first();
                     if($client == null){
                         //client belum terdaftar
@@ -274,7 +274,7 @@ class MyController extends Controller
         $quorum = MyController::getQuorum();
         if($quorum >= 5){
             try{
-                DB::transaction(function(){
+                DB::transaction(function() use($user_id, $nama){
                     $new = new Clients();
                     $new->id = $user_id;
                     $new->nama = $nama;
