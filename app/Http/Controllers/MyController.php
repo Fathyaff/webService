@@ -174,7 +174,7 @@ class MyController extends Controller
                                 'Accept' => 'application/json',
                                 'Content-type' => 'application/json'
                             ],'form_params' => array(
-                                'user_id' => $user_id,
+                                'user_id' => "1406543832",
                             )
                         ]);
                         
