@@ -54,8 +54,8 @@ class MyController extends Controller
                 "npm" => "1406564074"
             ),
             array(
-                "ip" => "172.17.0.66",
-                "npm" => "1306398983"
+                "ip" => "172.17.0.42",
+                "npm" => "1406543832"
             )
         );
 
@@ -95,15 +95,11 @@ class MyController extends Controller
                 }else{
                     //check nilai transfer
                     
-                    
                     $saldo = $client->saldo;
                     $newSaldo = $saldo + $nilai;
                     $update = $client;
                     $update->saldo = $newSaldo;
                     $update->update();
-
-
-
                         
                     $status_transfer = 1;
                 }                
