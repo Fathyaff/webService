@@ -90,27 +90,28 @@ class MyController extends Controller
         $quorum = MyController::getQuorum();
         if($quorum >= 5){
             try{
-                $client = Clients::where('id', $user_id)->first();
-                if($client == null){
-                    //client belum terdaftar
-                    $status_transfer = -1;
-                }else{
-                    //check nilai transfer
-                    $saldo = $client->saldo;
-                    $newSaldo = $saldo + $nilai;
-                    $update = $client;
-                    $update->saldo = $newSaldo;
-                    $update->update();
+                DB::transaction(function(){
+                    $client = Clients::where('id', $user_id)->first();
+                    if($client == null){
+                        //client belum terdaftar
+                        $status_transfer = -1;
+                    }else{
+                        //check nilai transfer
+                        $saldo = $client->saldo;
+                        $newSaldo = $saldo + $nilai;
+                        $update = $client;
+                        $update->saldo = $newSaldo;
+                        $update->update();
+                        
+                        $status_transfer = 1;
+                    }                
                     
-                    $status_transfer = 1;
-                }                
-                
-                if(Clients::where('id', $user_id)->first() != null){
-                    $status_transfer = 1;
-                }
+                    if(Clients::where('id', $user_id)->first() != null){
+                        $status_transfer = 1;
+                    }
+                });        
             }catch(\Illuminate\Database\QueryException $ex){
                 $status_transfer = -4;
-                dd($ex);
             }
         }else{
             //quorum tidak terpenuhi
@@ -272,15 +273,17 @@ class MyController extends Controller
         $quorum = MyController::getQuorum();
         if($quorum >= 5){
             try{
-                $new = new Clients();
-                $new->id = $user_id;
-                $new->nama = $nama;
-                $new->saldo = 0;
-                $new->save();
-                
-                if(Clients::where('id', $user_id)->first() != null){
-                    $status_register = 1;
-                }
+                DB::transactions(function(){
+                    $new = new Clients();
+                    $new->id = $user_id;
+                    $new->nama = $nama;
+                    $new->saldo = 0;
+                    $new->save();
+                    
+                    if(Clients::where('id', $user_id)->first() != null){
+                        $status_register = 1;
+                    }
+                });
            }catch(\Illuminate\Database\QueryException $ex){
                 
                 $status_register = -4;
