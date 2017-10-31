@@ -145,10 +145,6 @@ class MyController extends Controller
                             "npm" => "1406579100"
                         ),
                         array(
-                            "ip" => "172.17.0.47",
-                            "npm" => "1406543744"
-                        ),
-                        array(
                             "ip" => "172.17.0.36",
                             "npm" => "1406543624"
                         ),
@@ -163,7 +159,11 @@ class MyController extends Controller
                         array(
                             "ip" => "172.17.0.66",
                             "npm" => "1306398983"
-                        )
+                        ),
+                        array(
+                            "ip" => "172.17.0.47",
+                            "npm" => "1406543744"
+                        ),
                     );
 
                     for($i = 0; $i < 8 ; $i++){
