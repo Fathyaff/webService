@@ -145,8 +145,8 @@ class MyController extends Controller
                             "npm" => "1406579100"
                         ),
                         array(
-                            "ip" => "172.17.0.59",
-                            "npm" => "1406527532"
+                            "ip" => "172.17.0.47",
+                            "npm" => "1406543744"
                         ),
                         array(
                             "ip" => "172.17.0.36",
