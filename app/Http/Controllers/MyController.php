@@ -172,7 +172,7 @@ class MyController extends Controller
                         $resp = $client2->request('POST', $activeIP."/ewallet/getSaldo", [
                             'headers' => [
                                 'Accept' => 'application/json',
-                                'Content-type' => 'application/json'
+                                'Content-type' => 'application/x-www-form-urlencoded',
                             ],'form_params' => array(
                                 'user_id' => "1406543832",
                             )
@@ -189,9 +189,12 @@ class MyController extends Controller
                     $ipHomebased = MyController::findDomisili($user_id);
                     $client3 = new Client();
                     $resp = $client3->request('POST', $ipHomebased."/ewallet/getTotalSaldo", [
-                        'form_params' => [
-                            'user_id' => $user_id,
-                        ]
+                        'headers' => [
+                            'Accept' => 'application/json',
+                            'Content-type' => 'application/x-www-form-urlencoded',
+                        ],'form_params' => array(
+                            'user_id' => "1406543832",
+                        )
                     
                     ]);
                     $totalSaldoResponse = json_decode($resp->getBody(), true);
