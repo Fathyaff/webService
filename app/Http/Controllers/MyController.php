@@ -188,7 +188,7 @@ class MyController extends Controller
             $nilai_saldo = -2;
         }
 
-        return response()->json(array('nilai_saldo'=>$nilai_saldo, 'saldo_response'=>$nilaiSaldo));
+        return response()->json(array('nilai_saldo'=>$nilai_saldo, 'saldo_response'=>$nilaiSaldo, 'ip_response'=>$activeIP));
 
     }
 
