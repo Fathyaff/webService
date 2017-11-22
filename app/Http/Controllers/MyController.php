@@ -56,7 +56,6 @@ class MyController extends Controller
             $client2 = new Client();
             $resp = $client2->request('POST', $activeIP."/ewallet/ping", [
                 'headers' => [
-                    'Accept' => 'application/json',
                     'Content-Type' => 'application/json'
             ]]);
             
@@ -150,9 +149,9 @@ class MyController extends Controller
                         $resp = $client2->request('POST', $activeIP."/ewallet/getSaldo", [
                             'headers' => [
                                 'Content-Type' => 'application/json',
-                            ],'form_params' => array(
+                            ],'form_params' => [
                                 'user_id' => $user_id,
-                            )
+                            ],
                         ]);
                         
                         $saldoResponse = json_decode($resp->getBody(), true);
@@ -168,10 +167,9 @@ class MyController extends Controller
                     $resp = $client3->request('POST', $ipHomebased."/ewallet/getTotalSaldo", [
                         'headers' => [
                             'Content-Type' => 'application/json',
-                        ],'form_params' => array(
+                        ],'form_params' => [
                             'user_id' => $user_id,
-                        )
-                    
+                        ],
                     ]);
                     $totalSaldoResponse = json_decode($resp->getBody(), true);
                     $nilai_saldo = $totalSaldoResponse['nilai_saldo'];
