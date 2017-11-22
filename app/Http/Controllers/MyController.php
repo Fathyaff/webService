@@ -15,7 +15,7 @@ class MyController extends Controller
     public static function getQuorum(){
         $totalQuorum = 0;
         // $client = new Client();
-        // $res = $client->request('GET', 'http://152.118.31.2/list.php', [
+        // $res = $client->request('GET', 'http://172.17.0.38/list.php', [
         //     'headers' => [
         //         'Accept' => 'application/json',
         //         'Content-type' => 'application/json'
@@ -26,37 +26,29 @@ class MyController extends Controller
         
         $array = array(
             array(
+                "ip" => "172.17.0.18",
+                "npm" => "1406578278"
+            ),
+            array(
+                "ip" => "172.17.0.51",
+                "npm" => "1406543694"
+            ),
+            array(
+                "ip" => "172.17.0.50",
+                "npm" => "1406543712"
+            ),
+            array(
+                "ip" => "172.17.0.38",
+                "npm" => "1406559036"
+            ),
+            array(
                 "ip" => "172.17.0.19",
                 "npm" => "1406577386"
             ),
             array(
-                "ip" => "172.17.0.40",
-                "npm" => "1406543712"
+                "ip"=> "172.17.0.42",
+                "npm"=> "1406543832"
             ),
-            array(
-                "ip" => "172.17.0.17",
-                "npm" => "1406579100"
-            ),
-            array(
-                "ip" => "172.17.0.59",
-                "npm" => "1406527532"
-            ),
-            array(
-                "ip" => "172.17.0.36",
-                "npm" => "1406543624"
-            ),
-            array(
-                "ip" => "172.17.0.21",
-                "npm" => "1406573923"
-            ),
-            array(
-                "ip" => "172.17.0.32",
-                "npm" => "1406564074"
-            ),
-            array(
-                "ip" => "172.17.0.42",
-                "npm" => "1406543832"
-            )
         );
 
         for($i = 0; $i < 8 ; $i++){
@@ -129,37 +121,28 @@ class MyController extends Controller
                 if($user_id == '1406543832'){
                     $array = array(
                         array(
+                            "ip" => "172.17.0.18",
+                            "npm" => "1406578278"
+                        ),
+                        array(
+                            "ip" => "172.17.0.51",
+                            "npm" => "1406543694"
+                        ),
+                        array(
+                            "ip" => "172.17.0.50",
+                            "npm" => "1406543712"
+                        ),
+                        array(
+                            "ip" => "172.17.0.38",
+                            "npm" => "1406559036"
+                        ),
+                        array(
                             "ip" => "172.17.0.19",
                             "npm" => "1406577386"
                         ),
                         array(
-                            "ip" => "172.17.0.40",
-                            "npm" => "1406543712"
-                        ),
-                        array(
-                            "ip" => "172.17.0.17",
-                            "npm" => "1406579100"
-                        ),
-                        array(
-                            "ip" => "172.17.0.36",
-                            "npm" => "1406543624"
-                        ),
-                        array(
-                            "ip" => "172.17.0.21",
-                            "npm" => "1406573923"
-                        ),
-                        array(
-                            "ip" => "172.17.0.23",
-                            "npm" => "1406573601"             
-                        ),
-                        array(
-                            "ip"=> "172.17.0.48",
-                            "npm"=> "1406543763"
-                        ),
-                        array(
-                            "ip"=> "172.17.0.42.66",
-                            "npm"=> "1306381704"
-                    
+                            "ip"=> "172.17.0.42",
+                            "npm"=> "1406543832"
                         ),
                     );
 
