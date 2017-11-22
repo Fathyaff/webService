@@ -149,7 +149,6 @@ class MyController extends Controller
                         $client2 = new Client();
                         $resp = $client2->request('POST', $activeIP."/ewallet/getSaldo", [
                             'headers' => [
-                                'Accept' => 'application/json',
                                 'Content-Type' => 'application/json',
                             ],'form_params' => array(
                                 'user_id' => $user_id,
@@ -168,7 +167,6 @@ class MyController extends Controller
                     $client3 = new Client();
                     $resp = $client3->request('POST', $ipHomebased."/ewallet/getTotalSaldo", [
                         'headers' => [
-                            'Accept' => 'application/json',
                             'Content-Type' => 'application/json',
                         ],'form_params' => array(
                             'user_id' => $user_id,
