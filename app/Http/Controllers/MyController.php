@@ -221,8 +221,8 @@ class MyController extends Controller
         $user_id = $request->user_id;
         $nilai_saldo = -99;
         $quorum = 0;
-        //pemrosessan quorum
-       // $quorum = MyController::getQuorum();
+        
+        $quorum = MyController::getQuorum();
         // if($quorum >= 5){
         //     try{
         //         $client = Clients::where('id', $user_id)->first();
@@ -239,7 +239,7 @@ class MyController extends Controller
         //     $nilai_saldo = -2;
         // }
 
-        return response()->json(array('nilai_saldo'=>$nilai_saldo, 'user_id'=>$user_id, 'quorum'=>$quorum));
+        return response()->json(array('nilai_saldo'=>$nilai_saldo, 'quorum'=>$quorum));
         
     }
 
@@ -247,8 +247,8 @@ class MyController extends Controller
         $user_id = $request->user_id;
         $nama = $request->nama;
         $status_register = -99;
-        $quorum = 0;
-        // $quorum = MyController::getQuorum();
+
+        $quorum = MyController::getQuorum();
         // if($quorum >= 5){
         //     try{
                 
@@ -270,7 +270,7 @@ class MyController extends Controller
         //     $status_register = -2;
         // }
 
-        return response()->json(array('status_register'=>$status_register, 'user_id'=>$user_id, 'nama'=>$nama, 'quorum'=>$quorum));
+        return response()->json(array('status_register'=>$status_register, 'quorum'=>$quorum));
     }
 
 }
