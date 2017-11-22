@@ -118,10 +118,6 @@ class MyController extends Controller
                 if($user_id == "1406543832"){
                     $array = array(
                         array(
-                            "ip" => "172.17.0.18",
-                            "npm" => "1406578278"
-                        ),
-                        array(
                             "ip" => "172.17.0.51",
                             "npm" => "1406543694"
                         ),
@@ -136,6 +132,10 @@ class MyController extends Controller
                         array(
                             "ip" => "172.17.0.50",
                             "npm" => "1406543712"
+                        ),
+                        array(
+                            "ip" => "172.17.0.18",
+                            "npm" => "1406578278"
                         ),
                         array(
                             "ip"=> "172.17.0.42",
