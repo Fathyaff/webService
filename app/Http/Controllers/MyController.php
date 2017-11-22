@@ -219,56 +219,58 @@ class MyController extends Controller
 
     public function getSaldo(Request $request){
         $user_id = $request->user_id;
-
+        $nilai_saldo = -99;
+        $quorum = 0;
         //pemrosessan quorum
-        $quorum = MyController::getQuorum();
-        if($quorum >= 5){
-            try{
-                $client = Clients::where('id', $user_id)->first();
-                if($client == null){
-                    $nilai_saldo = -1;
-                }else{
-                    $nilai_saldo = $client->saldo;
-                }
-            }catch(\Illuminate\Database\QueryException $ex){
-                $nilai_saldo = -4;
-            }
-        }else{
-            //quorum tidak terpenuhi
-            $nilai_saldo = -2;
-        }
+       // $quorum = MyController::getQuorum();
+        // if($quorum >= 5){
+        //     try{
+        //         $client = Clients::where('id', $user_id)->first();
+        //         if($client == null){
+        //             $nilai_saldo = -1;
+        //         }else{
+        //             $nilai_saldo = $client->saldo;
+        //         }
+        //     }catch(\Illuminate\Database\QueryException $ex){
+        //         $nilai_saldo = -4;
+        //     }
+        // }else{
+        //     //quorum tidak terpenuhi
+        //     $nilai_saldo = -2;
+        // }
 
-        return response()->json(array('nilai_saldo'=>$nilai_saldo));
+        return response()->json(array('nilai_saldo'=>$nilai_saldo, 'user_id'=>$user_id, 'quorum'=>$quorum));
         
     }
 
     public function register(Request $request){
         $user_id = $request->user_id;
         $nama = $request->nama;
-
-        $quorum = MyController::getQuorum();
-        if($quorum >= 5){
-            try{
+        $status_register = -99;
+        $quorum = 0;
+        // $quorum = MyController::getQuorum();
+        // if($quorum >= 5){
+        //     try{
                 
-                    $new = new Clients();
-                    $new->id = $user_id;
-                    $new->nama = $nama;
-                    $new->saldo = 0;
-                    $new->save();
+        //             $new = new Clients();
+        //             $new->id = $user_id;
+        //             $new->nama = $nama;
+        //             $new->saldo = 0;
+        //             $new->save();
                     
-                    if(Clients::where('id', $user_id)->first() != null){
-                        $status_register = 1;
-                    }
-           }catch(\Illuminate\Database\QueryException $ex){
+        //             if(Clients::where('id', $user_id)->first() != null){
+        //                 $status_register = 1;
+        //             }
+        //    }catch(\Illuminate\Database\QueryException $ex){
                 
-                $status_register = -4;
-            }
-        }else{
-            //quorum tidak terpenuhi
-            $status_register = -2;
-        }
+        //         $status_register = -4;
+        //     }
+        // }else{
+        //     //quorum tidak terpenuhi
+        //     $status_register = -2;
+        // }
 
-        return response()->json(array('status_register'=>$status_register));
+        return response()->json(array('status_register'=>$status_register, 'user_id'=>$user_id, 'nama'=>$nama, 'quorum'=>$quorum));
     }
 
 }

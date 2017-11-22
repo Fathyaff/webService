@@ -17,6 +17,6 @@ class VerifyCsrfToken extends Middleware
         '/ewallet/register',
         '/ewallet/getSaldo',
         '/ewallet/getTotalSaldo',
-        '/ewallet/transfer'
+        '/ewallet/transfer',
     ];
 }
