@@ -115,6 +115,8 @@ class MyController extends Controller
         $quorum = MyController::getQuorum();
         if($quorum >= 5){
             try{
+                $client = Clients::where('id', $user_id)->first();
+                $nilai_saldo = $nilai_saldo + $client->saldo;
                 if($user_id == "1406543832"){
                     $array = array(
                         array(
@@ -137,11 +139,7 @@ class MyController extends Controller
                         // array(
                         //     "ip" => "172.17.0.50",
                         //     "npm" => "1406543712"
-                        // ), 
-                        array(
-                            "ip"=> "172.17.0.42",
-                            "npm"=> "1406543832"
-                        ),
+                        // ),
                     );
 
                     for($i = 0; $i < 5 ; $i++){
