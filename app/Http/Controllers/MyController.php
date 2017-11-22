@@ -15,49 +15,49 @@ class MyController extends Controller
     public static function getQuorum(){
         $totalQuorum = 0;
         $client = new Client();
-        $res = $client->request('GET', 'http://172.17.0.38/list.php', [
-            'headers' => [
-                'Accept' => 'application/json',
-                'Content-type' => 'application/json'
-        ]]);
+        // $res = $client->request('GET', 'http://172.17.0.38/list.php', [
+        //     'headers' => [
+        //         'Accept' => 'application/json',
+        //         'Content-type' => 'application/json'
+        // ]]);
         
-        $bodyResp = $res->getBody();
-        $array = json_decode($bodyResp, true);
+        // $bodyResp = $res->getBody();
+        //$array = json_decode($bodyResp, true);
         
-        // $array = array(
-        //     array(
-        //         "ip" => "172.17.0.18",
-        //         "npm" => "1406578278"
-        //     ),
-        //     array(
-        //         "ip" => "172.17.0.51",
-        //         "npm" => "1406543694"
-        //     ),
-        //     array(
-        //         "ip" => "172.17.0.50",
-        //         "npm" => "1406543712"
-        //     ),
-        //     array(
-        //         "ip" => "172.17.0.38",
-        //         "npm" => "1406559036"
-        //     ),
-        //     array(
-        //         "ip" => "172.17.0.19",
-        //         "npm" => "1406577386"
-        //     ),
-        //     array(
-        //         "ip"=> "172.17.0.42",
-        //         "npm"=> "1406543832"
-        //     ),
-        // );
+        $array = array(
+            array(
+                "ip" => "172.17.0.18",
+                "npm" => "1406578278"
+            ),
+            array(
+                "ip" => "172.17.0.51",
+                "npm" => "1406543694"
+            ),
+            array(
+                "ip" => "172.17.0.50",
+                "npm" => "1406543712"
+            ),
+            array(
+                "ip" => "172.17.0.38",
+                "npm" => "1406559036"
+            ),
+            array(
+                "ip" => "172.17.0.19",
+                "npm" => "1406577386"
+            ),
+            array(
+                "ip"=> "172.17.0.42",
+                "npm"=> "1406543832"
+            ),
+        );
 
-        for($i = 0; $i < 8 ; $i++){
+        for($i = 0; $i < 5 ; $i++){
             $activeIP = $array[$i]['ip'];
             $client2 = new Client();
             $resp = $client2->request('POST', $activeIP."/ewallet/ping", [
                 'headers' => [
                     'Accept' => 'application/json',
-                    'Content-type' => 'application/json'
+                    'Content-Type' => 'application/json'
             ]]);
             
             $quorumResponse = json_decode($resp->getBody(), true);
@@ -146,7 +146,7 @@ class MyController extends Controller
                         ),
                     );
 
-                    for($i = 0; $i < 8 ; $i++){
+                    for($i = 0; $i < 5 ; $i++){
                         $activeIP = $array[$i]['ip'];
                         $client2 = new Client();
                         $resp = $client2->request('POST', $activeIP."/ewallet/getSaldo", [
@@ -223,21 +223,21 @@ class MyController extends Controller
         $quorum = 0;
         
         $quorum = MyController::getQuorum();
-        // if($quorum >= 5){
-        //     try{
-        //         $client = Clients::where('id', $user_id)->first();
-        //         if($client == null){
-        //             $nilai_saldo = -1;
-        //         }else{
-        //             $nilai_saldo = $client->saldo;
-        //         }
-        //     }catch(\Illuminate\Database\QueryException $ex){
-        //         $nilai_saldo = -4;
-        //     }
-        // }else{
-        //     //quorum tidak terpenuhi
-        //     $nilai_saldo = -2;
-        // }
+        if($quorum >= 5){
+            try{
+                $client = Clients::where('id', $user_id)->first();
+                if($client == null){
+                    $nilai_saldo = -1;
+                }else{
+                    $nilai_saldo = $client->saldo;
+                }
+            }catch(\Illuminate\Database\QueryException $ex){
+                $nilai_saldo = -4;
+            }
+        }else{
+            //quorum tidak terpenuhi
+            $nilai_saldo = -2;
+        }
 
         return response()->json(array('nilai_saldo'=>$nilai_saldo, 'quorum'=>$quorum));
         
@@ -249,26 +249,26 @@ class MyController extends Controller
         $status_register = -99;
 
         $quorum = MyController::getQuorum();
-        // if($quorum >= 5){
-        //     try{
+        if($quorum >= 5){
+            try{
                 
-        //             $new = new Clients();
-        //             $new->id = $user_id;
-        //             $new->nama = $nama;
-        //             $new->saldo = 0;
-        //             $new->save();
+                    $new = new Clients();
+                    $new->id = $user_id;
+                    $new->nama = $nama;
+                    $new->saldo = 0;
+                    $new->save();
                     
-        //             if(Clients::where('id', $user_id)->first() != null){
-        //                 $status_register = 1;
-        //             }
-        //    }catch(\Illuminate\Database\QueryException $ex){
+                    if(Clients::where('id', $user_id)->first() != null){
+                        $status_register = 1;
+                    }
+           }catch(\Illuminate\Database\QueryException $ex){
                 
-        //         $status_register = -4;
-        //     }
-        // }else{
-        //     //quorum tidak terpenuhi
-        //     $status_register = -2;
-        // }
+                $status_register = -4;
+            }
+        }else{
+            //quorum tidak terpenuhi
+            $status_register = -2;
+        }
 
         return response()->json(array('status_register'=>$status_register, 'quorum'=>$quorum));
     }
