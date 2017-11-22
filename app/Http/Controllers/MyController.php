@@ -142,7 +142,7 @@ class MyController extends Controller
                         // ),
                     );
 
-                    for($i = 0; $i < 5 ; $i++){
+                    for($i = 0; $i < count($array) ; $i++){
                         $activeIP = $array[$i]['ip'];
                         $client2 = new Client();
                         $resp = $client2->request('POST', $activeIP."/ewallet/getSaldo", [
