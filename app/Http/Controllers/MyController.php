@@ -38,10 +38,10 @@ class MyController extends Controller
                 "ip" => "172.17.0.50",
                 "npm" => "1406543712"
             ),
-            array(
-                "ip" => "172.17.0.38",
-                "npm" => "1406559036"
-            ),
+            // array(
+            //     "ip" => "172.17.0.38",
+            //     "npm" => "1406559036"
+            // ),
             array(
                 "ip" => "172.17.0.19",
                 "npm" => "1406577386"
@@ -52,7 +52,7 @@ class MyController extends Controller
             ),
         );
 
-        for($i = 0; $i < 5 ; $i++){
+        for($i = 0; $i < count($array) ; $i++){
             $activeIP = $array[$i]['ip'];
             $client2 = new Client();
             $resp = $client2->request('POST', $activeIP."/ewallet/ping", [
@@ -124,10 +124,10 @@ class MyController extends Controller
                             "ip" => "172.17.0.51",
                             "npm" => "1406543694"
                         ),
-                        array(
-                            "ip" => "172.17.0.38",
-                            "npm" => "1406559036"
-                        ),
+                        // array(
+                        //     "ip" => "172.17.0.38",
+                        //     "npm" => "1406559036"
+                        // ),
                         
                         array(
                             "ip" => "172.17.0.18",
@@ -145,16 +145,21 @@ class MyController extends Controller
 
                     for($i = 0; $i < count($array) ; $i++){
                         $activeIP = $array[$i]['ip'];
-                        $client2 = new Client();
-                        $resp = $client2->post("http://".$activeIP."/ewallet/getSaldo", [
-                            'headers' => [
-                                'Content-Type' => 'application/json',
-                            ],'form_params' => [
-                                'user_id' => $user_id,
-                            ],
-                        ]);
-                        $saldoResponse = json_decode($resp->getBody(), true);
-                                            
+                        // $client2 = new Client();
+                        // $resp = $client2->post("http://".$activeIP."/ewallet/getSaldo", [
+                        //     'headers' => [
+                        //         'Content-Type' => 'application/json',
+                        //     ],'form_params' => [
+                        //         'user_id' => $user_id,
+                        //     ],
+                        // ]);
+                        // $saldoResponse = json_decode($resp->getBody(), true);
+                                
+                        $process = new Process('curl -d \'{"user_id":"1406543832"}\' -H "Content-Type: application/json" -X POST http://'.$activeIP.'/ewallet/getSaldo');
+                        $process->start();
+                        
+                        $saldoResponse = json_decode($process->getOutput(), true);
+                                               
                         $nilaiSaldo = $saldoResponse['nilai_saldo'];
                         if($nilaiSaldo >= 0){
                             $nilai_saldo = $nilai_saldo + $nilaiSaldo;
@@ -163,15 +168,21 @@ class MyController extends Controller
 
                 }else{
                     $ipHomebased = MyController::findDomisili($user_id);
-                    $client3 = new Client();
-                    $resp = $client3->request('POST', $ipHomebased."/ewallet/getTotalSaldo", [
-                        'headers' => [
-                            'Content-Type' => 'application/json',
-                        ],'form_params' => [
-                            'user_id' => $user_id,
-                        ],
-                    ]);
-                    $totalSaldoResponse = json_decode($resp->getBody(), true);
+                    // $client3 = new Client();
+                    // $resp = $client3->request('POST', $ipHomebased."/ewallet/getTotalSaldo", [
+                    //     'headers' => [
+                    //         'Content-Type' => 'application/json',
+                    //     ],'form_params' => [
+                    //         'user_id' => $user_id,
+                    //     ],
+                    // ]);
+
+                    $process = new Process('curl -d \'{"user_id":"1406543832"}\' -H "Content-Type: application/json" -X POST http://'.$activeIP.'/ewallet/getTotalSaldo');
+                    $process->start();
+                    
+                    $saldoResponse = json_decode($process->getOutput(), true);
+
+                    //$totalSaldoResponse = json_decode($resp->getBody(), true);
                     $nilai_saldo = $totalSaldoResponse['nilai_saldo'];
                 }
                 
@@ -190,9 +201,8 @@ class MyController extends Controller
 
     private static function findDomisili($user_id){
         $client = new Client();
-        $res = $client->request('GET', 'http://152.118.31.2/list.php', [
+        $res = $client->request('GET', 'http://172.17.0.38/list.php', [
             'headers' => [
-                'Accept' => 'application/json',
                 'Content-type' => 'application/json'
         ]]);
         
