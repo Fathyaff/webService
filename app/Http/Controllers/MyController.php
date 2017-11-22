@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Clients;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Symfony\Component\Process\Process;
 
 class MyController extends Controller
 {
@@ -145,15 +146,15 @@ class MyController extends Controller
                     for($i = 0; $i < count($array) ; $i++){
                         $activeIP = $array[$i]['ip'];
                         $client2 = new Client();
-                        $resp = $client2->request('POST', $activeIP."/ewallet/getSaldo", [
+                        $resp = $client2->post("http://".$activeIP."/ewallet/getSaldo", [
                             'headers' => [
                                 'Content-Type' => 'application/json',
                             ],'form_params' => [
                                 'user_id' => $user_id,
                             ],
                         ]);
-                        
                         $saldoResponse = json_decode($resp->getBody(), true);
+                                            
                         $nilaiSaldo = $saldoResponse['nilai_saldo'];
                         if($nilaiSaldo >= 0){
                             $nilai_saldo = $nilai_saldo + $nilaiSaldo;
