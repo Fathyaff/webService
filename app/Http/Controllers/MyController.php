@@ -116,7 +116,7 @@ class MyController extends Controller
         $quorum = MyController::getQuorum();
         if($quorum >= 5){
             try{
-                if($user_id == '1406543832'){
+                if($user_id == "1406543832"){
                     $array = array(
                         array(
                             "ip" => "172.17.0.18",
@@ -159,7 +159,7 @@ class MyController extends Controller
                         $saldoResponse = json_decode($resp->getBody(), true);
                         $nilaiSaldo = $saldoResponse['nilai_saldo'];
                         if($nilaiSaldo >= 0){
-                            $nilai_saldo += $nilaiSaldo;
+                            $nilai_saldo = $nilai_saldo + $nilaiSaldo;
                         }
                     }
 
@@ -188,7 +188,7 @@ class MyController extends Controller
             $nilai_saldo = -2;
         }
 
-        return response()->json(array('nilai_saldo'=>$nilai_saldo));
+        return response()->json(array('nilai_saldo'=>$nilai_saldo, 'saldo_response'=>$nilaiSaldo));
 
     }
 
