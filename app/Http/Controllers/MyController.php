@@ -86,7 +86,6 @@ class MyController extends Controller
                     $status_transfer = -1;
                 }else{
                     //check nilai transfer
-                    
                     $saldo = $client->saldo;
                     $newSaldo = $saldo + $nilai;
                     $update = $client;
@@ -106,7 +105,6 @@ class MyController extends Controller
             //quorum tidak terpenuhi
             $status_transfer = -2;
         }
-
         return response()->json(array('status_transfer'=>$status_transfer));
     }
 
@@ -239,7 +237,7 @@ class MyController extends Controller
             $nilai_saldo = -2;
         }
 
-        return response()->json(array('nilai_saldo'=>$nilai_saldo, 'quorum'=>$quorum));
+        return response()->json(array('nilai_saldo'=>$nilai_saldo));
         
     }
 
@@ -270,7 +268,7 @@ class MyController extends Controller
             $status_register = -2;
         }
 
-        return response()->json(array('status_register'=>$status_register, 'quorum'=>$quorum));
+        return response()->json(array('status_register'=>$status_register));
     }
 
 }
