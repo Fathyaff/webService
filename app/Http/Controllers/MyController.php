@@ -147,7 +147,7 @@ class MyController extends Controller
                         $client2 = new Client();
                         $resp = $client2->request('POST', $activeIP."/ewallet/getSaldo", [
                             'headers' => [
-                                'Content-Type' => 'application/x-www-form-urlencoded',
+                                'Content-Type' => 'application/json',
                             ],'form_params' => [
                                 'user_id' => $user_id,
                             ],
