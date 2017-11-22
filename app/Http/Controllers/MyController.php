@@ -14,42 +14,42 @@ class MyController extends Controller
 
     public static function getQuorum(){
         $totalQuorum = 0;
-        // $client = new Client();
-        // $res = $client->request('GET', 'http://172.17.0.38/list.php', [
-        //     'headers' => [
-        //         'Accept' => 'application/json',
-        //         'Content-type' => 'application/json'
-        // ]]);
+        $client = new Client();
+        $res = $client->request('GET', 'http://172.17.0.38/list.php', [
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-type' => 'application/json'
+        ]]);
         
-        // $bodyResp = $res->getBody();
-        //$array = json_decode($bodyResp, true);
+        $bodyResp = $res->getBody();
+        $array = json_decode($bodyResp, true);
         
-        $array = array(
-            array(
-                "ip" => "172.17.0.18",
-                "npm" => "1406578278"
-            ),
-            array(
-                "ip" => "172.17.0.51",
-                "npm" => "1406543694"
-            ),
-            array(
-                "ip" => "172.17.0.50",
-                "npm" => "1406543712"
-            ),
-            array(
-                "ip" => "172.17.0.38",
-                "npm" => "1406559036"
-            ),
-            array(
-                "ip" => "172.17.0.19",
-                "npm" => "1406577386"
-            ),
-            array(
-                "ip"=> "172.17.0.42",
-                "npm"=> "1406543832"
-            ),
-        );
+        // $array = array(
+        //     array(
+        //         "ip" => "172.17.0.18",
+        //         "npm" => "1406578278"
+        //     ),
+        //     array(
+        //         "ip" => "172.17.0.51",
+        //         "npm" => "1406543694"
+        //     ),
+        //     array(
+        //         "ip" => "172.17.0.50",
+        //         "npm" => "1406543712"
+        //     ),
+        //     array(
+        //         "ip" => "172.17.0.38",
+        //         "npm" => "1406559036"
+        //     ),
+        //     array(
+        //         "ip" => "172.17.0.19",
+        //         "npm" => "1406577386"
+        //     ),
+        //     array(
+        //         "ip"=> "172.17.0.42",
+        //         "npm"=> "1406543832"
+        //     ),
+        // );
 
         for($i = 0; $i < 8 ; $i++){
             $activeIP = $array[$i]['ip'];
