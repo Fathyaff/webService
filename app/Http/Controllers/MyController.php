@@ -132,14 +132,14 @@ class MyController extends Controller
                             "ip" => "172.17.0.18",
                             "npm" => "1406578278"
                         ),
-                        // array(
-                        //     "ip" => "172.17.0.19",
-                        //     "npm" => "1406577386"
-                        // ),
-                        // array(
-                        //     "ip" => "172.17.0.50",
-                        //     "npm" => "1406543712"
-                        // ),
+                        array(
+                            "ip" => "172.17.0.19",
+                            "npm" => "1406577386"
+                        ),
+                        array(
+                            "ip" => "172.17.0.50",
+                            "npm" => "1406543712"
+                        ),
                     );
 
                     for($i = 0; $i < count($array) ; $i++){
@@ -147,7 +147,7 @@ class MyController extends Controller
                         $client2 = new Client();
                         $resp = $client2->request('POST', $activeIP."/ewallet/getSaldo", [
                             'headers' => [
-                                'Content-Type' => 'application/json',
+                                'Content-Type' => 'application/x-www-form-urlencoded',
                             ],'form_params' => [
                                 'user_id' => $user_id,
                             ],
