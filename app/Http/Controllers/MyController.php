@@ -228,7 +228,8 @@ class MyController extends Controller
                 if($client == null){
                     $nilai_saldo = -1;
                 }else{
-                    $nilai_saldo = $client->saldo;
+                    $nilai_saldo = -99;
+                    //$nilai_saldo = $client->saldo;
                 }
             }catch(\Illuminate\Database\QueryException $ex){
                 $nilai_saldo = -4;
