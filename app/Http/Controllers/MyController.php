@@ -150,7 +150,7 @@ class MyController extends Controller
                         $resp = $client2->request('POST', $activeIP."/ewallet/getSaldo", [
                             'headers' => [
                                 'Accept' => 'application/json',
-                                'Content-type' => 'application/x-www-form-urlencoded',
+                                'Content-type' => 'application/json',
                             ],'form_params' => array(
                                 'user_id' => $user_id,
                             )
@@ -169,7 +169,7 @@ class MyController extends Controller
                     $resp = $client3->request('POST', $ipHomebased."/ewallet/getTotalSaldo", [
                         'headers' => [
                             'Accept' => 'application/json',
-                            'Content-type' => 'application/x-www-form-urlencoded',
+                            'Content-type' => 'application/json',
                         ],'form_params' => array(
                             'user_id' => $user_id,
                         )
