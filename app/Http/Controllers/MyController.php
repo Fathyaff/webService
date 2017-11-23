@@ -46,10 +46,10 @@ class MyController extends Controller
                 "ip" => "172.17.0.19",
                 "npm" => "1406577386"
             ),
-            array(
-                "ip"=> "172.17.0.42",
-                "npm"=> "1406543832"
-            ),
+            // array(
+            //     "ip"=> "172.17.0.42",
+            //     "npm"=> "1406543832"
+            // ),
         );
 
         for($i = 0; $i < count($array) ; $i++){
