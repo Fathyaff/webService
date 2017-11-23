@@ -65,7 +65,7 @@ class MyController extends Controller
             //$quorumResponse = json_decode($resp->getBody(), true);
 
             $process = new Process('curl -H "Content-Type: application/json" -X POST http://'.$activeIP.'/ewallet/ping');
-            $process->start();
+            $process->run();
             
             $quorumResponse = json_decode($process->getOutput(), true);
 
@@ -164,7 +164,7 @@ class MyController extends Controller
                         // $saldoResponse = json_decode($resp->getBody(), true);
                                 
                         $process = new Process('curl -d \'{"user_id":"1406543832"}\' -H "Content-Type: application/json" -X POST http://'.$activeIP.'/ewallet/getSaldo');
-                        $process->start();
+                        $process->run();
                         
                         $saldoResponse = json_decode($process->getOutput(), true);
                                                
@@ -186,7 +186,7 @@ class MyController extends Controller
                     // ]);
 
                     $process = new Process('curl -d \'{"user_id":"'.$user_id.'"}\' -H "Content-Type: application/json" -X POST http://'.$activeIP.'/ewallet/getTotalSaldo');
-                    $process->start();
+                    $process->run();
                     
                     $saldoResponse = json_decode($process->getOutput(), true);
 
