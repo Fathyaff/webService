@@ -122,7 +122,7 @@ class MyController extends Controller
         //check if the client is from here
         //pemrosessan quorum
         $quorum = MyController::getQuorum();
-        if($quorum >= 5){
+        if($quorum >= 0){
             try{
                 $client = Clients::where('id', $user_id)->first();
                 $nilai_saldo = $nilai_saldo + $client->saldo;
