@@ -15,7 +15,7 @@ class MyController extends Controller
 
     public static function getQuorum(){
         $totalQuorum = 0;
-        $client = new Client();
+        // $client = new Client();
         // $res = $client->request('GET', 'http://172.17.0.38/list.php', [
         //     'headers' => [
         //         'Accept' => 'application/json',
