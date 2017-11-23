@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Clients;
-use GuzzleHttp\Client;
+// use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Symfony\Component\Process\Process;
 
@@ -54,13 +54,21 @@ class MyController extends Controller
 
         for($i = 0; $i < count($array) ; $i++){
             $activeIP = $array[$i]['ip'];
-            $client2 = new Client();
-            $resp = $client2->request('POST', $activeIP."/ewallet/ping", [
-                'headers' => [
-                    'Content-Type' => 'application/json'
-            ]]);
+            // $client2 = new Client();
+            // $resp = $client2->request('POST', $activeIP."/ewallet/ping", [
+            //     'headers' => [
+            //         'Content-Type' => 'application/json'
+            // ]]);
+
+
             
-            $quorumResponse = json_decode($resp->getBody(), true);
+            //$quorumResponse = json_decode($resp->getBody(), true);
+
+            $process = new Process('curl -H "Content-Type: application/json" -X POST http://'.$activeIP.'/ewallet/ping');
+            $process->start();
+            
+            $quorumResponse = json_decode($process->getOutput(), true);
+
             $pong = $quorumResponse['pong'];
             if($pong == 1){
                 $totalQuorum += 1;
@@ -177,7 +185,7 @@ class MyController extends Controller
                     //     ],
                     // ]);
 
-                    $process = new Process('curl -d \'{"user_id":"1406543832"}\' -H "Content-Type: application/json" -X POST http://'.$activeIP.'/ewallet/getTotalSaldo');
+                    $process = new Process('curl -d \'{"user_id":"'.$user_id.'"}\' -H "Content-Type: application/json" -X POST http://'.$activeIP.'/ewallet/getTotalSaldo');
                     $process->start();
                     
                     $saldoResponse = json_decode($process->getOutput(), true);
@@ -200,24 +208,60 @@ class MyController extends Controller
     }
 
     private static function findDomisili($user_id){
-        $client = new Client();
-        $res = $client->request('GET', 'http://172.17.0.38/list.php', [
-            'headers' => [
-                'Content-type' => 'application/json'
-        ]]);
-        
-        $bodyResp = $res->getBody();
-        $array = json_decode($bodyResp, true);
+        // $client = new Client();
+        // $res = $client->request('GET', 'http://172.17.0.38/list.php', [
+        //     'headers' => [
+        //         'Content-type' => 'application/json'
+        // ]]);
 
-        for($i = 0; $i < 8 ; $i++){
-            $ip = $array[$i]['ip'];
-            $npm = $array[$i]['npm'];
-            if($npm == $user_id){
-                return $ip;
-            }else{
-                //if no ip correspondent with user_id
-                return 0;
-            }
+            
+        // $bodyResp = $res->getBody();
+        // $array = json_decode($bodyResp, true);
+
+        // for($i = 0; $i < 8 ; $i++){
+        //     $ip = $array[$i]['ip'];
+        //     $npm = $array[$i]['npm'];
+        //     if($npm == $user_id){
+        //         return $ip;
+        //     }else{
+        //         //if no ip correspondent with user_id
+        //         return 0;
+        //     }
+        // }
+
+        $array = array(
+            array(
+                "ip" => "172.17.0.51",
+                "npm" => "1406543694"
+            ),
+            array(
+                "ip" => "172.17.0.38",
+                "npm" => "1406559036"
+            ),
+            
+            array(
+                "ip" => "172.17.0.18",
+                "npm" => "1406578278"
+            ),
+            array(
+                "ip" => "172.17.0.19",
+                "npm" => "1406577386"
+            ),
+            array(
+                "ip" => "172.17.0.50",
+                "npm" => "1406543712"
+            ),
+        );
+
+        for($i = 0; $i < count($array) ; $i++){
+            $activeIP = $array[$i]['ip'];
+                $npm = $array[$i]['npm'];
+                if($npm == $user_id){
+                    return $ip;
+                }else{
+                    //if no ip correspondent with user_id
+                    return 0;
+                }
         }
     }
 
