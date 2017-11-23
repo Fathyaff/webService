@@ -271,23 +271,23 @@ class MyController extends Controller
         $quorum = 0;
         
         $quorum = MyController::getQuorum();
-        // if($quorum >= 5){
-        //     try{
-        //         $client = Clients::where('id', $user_id)->first();
-        //         if($client == null){
-        //             $nilai_saldo = -1;
-        //         }else{
-        //             $nilai_saldo = $client->saldo;
-        //         }
-        //     }catch(\Illuminate\Database\QueryException $ex){
-        //         $nilai_saldo = -4;
-        //     }
-        // }else{
-        //     //quorum tidak terpenuhi
-        //     $nilai_saldo = -2;
-        // }
+        if($quorum >= 5){
+            try{
+                $client = Clients::where('id', $user_id)->first();
+                if($client == null){
+                    $nilai_saldo = -1;
+                }else{
+                    $nilai_saldo = $client->saldo;
+                }
+            }catch(\Illuminate\Database\QueryException $ex){
+                $nilai_saldo = -4;
+            }
+        }else{
+            //quorum tidak terpenuhi
+            $nilai_saldo = -2;
+        }
 
-        return response()->json(array('nilai_saldo'=>$nilai_saldo, 'quorum'=>$quorum));
+        return response()->json(array('nilai_saldo'=>$nilai_saldo));
         
     }
 
