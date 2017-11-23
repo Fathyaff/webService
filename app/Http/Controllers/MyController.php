@@ -64,7 +64,7 @@ class MyController extends Controller
             
             //$quorumResponse = json_decode($resp->getBody(), true);
 
-            $process = new Process('curl -H "Content-Type: application/json" -X POST http://'.$activeIP.'/ewallet/ping');
+            $process = new Process('curl -X POST http://'.$activeIP.'/ewallet/ping');
             $process->run();
             
             $quorumResponse = json_decode($process->getOutput(), true);
