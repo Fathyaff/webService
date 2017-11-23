@@ -287,7 +287,7 @@ class MyController extends Controller
             $nilai_saldo = -2;
         }
 
-        return response()->json(array('nilai_saldo'=>$nilai_saldo));
+        return response()->json(array('nilai_saldo'=>$nilai_saldo, 'quorum'=>$quorum));
         
     }
 
